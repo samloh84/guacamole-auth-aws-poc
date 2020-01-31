@@ -1,0 +1,22 @@
+#cloud-config
+#runcmd:
+#  - cloud-init-per once install_docker echo ${INSTALL_DOCKER_SH} | base64 -d | /bin/bash
+#  - cloud-init-per once install_aws_cli echo ${INSTALL_AWS_CLI_SH} | base64 -d | /bin/bash
+#  - cloud-init-per once start_guacamole docker-compose up --detach --project-directory /home/centos/guacamole
+
+write_files:
+  - encoding: b64
+    content: ${INSTALL_AWS_CLI_SH}
+    owner: centos:centos
+    path: /home/centos/install-aws-cli.sh
+    permissions: '0744'
+  - encoding: b64
+    content: ${INSTALL_DOCKER_SH}
+    owner: centos:centos
+    path: /home/centos/install-docker.sh
+    permissions: '0744'
+  - encoding: b64
+    content: ${GUACAMOLE_DOCKER_COMPOSE_YML}
+    owner: centos:centos
+    path: /home/centos/guacamole/docker-compose.yml
+    permissions: '0644'

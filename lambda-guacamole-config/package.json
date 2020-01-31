@@ -1,0 +1,17 @@
+{
+  "name": "guacamole-config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "zip": "rm -rf ../guacamole-config.zip ./output; zip -9 -r ./output/guacamole-config.zip ./index.js ./node_modules package.json package-lock.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samuel Loh Yin Kang <samuel.loh.yk@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.608.0",
+    "bluebird": "^3.7.2",
+    "lodash": "^4.17.15"
+  }
+}

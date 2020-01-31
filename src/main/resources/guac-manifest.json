@@ -1,0 +1,8 @@
+{
+  "guacamoleVersion": "1.0.0",
+  "name": "Anyhow AWS Authentication Extension",
+  "namespace": "guac-auth-anyhow-aws",
+  "authProviders": [
+    "dev.samloh.guacamole_extensions.anyhow_aws.AwsAuthenticationProvider"
+  ]
+}

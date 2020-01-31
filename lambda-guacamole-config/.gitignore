@@ -1,0 +1,9 @@
+.idea/
+output/
+*.iml
+node_modules/
+*.zip
+.terraform/
+terraform.tfstate*
+.terraform.tfstate*
+
