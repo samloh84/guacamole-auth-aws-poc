@@ -58,6 +58,7 @@ exports.handler = function (event, context, callback) {
                     _.set(configuration, 'protocol', 'ssh');
                     _.set(configuration, ['parameters', 'hostname'], instance.PrivateIpAddress);
                     _.set(configuration, ['parameters', 'port'], '22');
+                    _.set(configuration, ['parameters', 'port'], '22');
                 }
 
                 return configuration;

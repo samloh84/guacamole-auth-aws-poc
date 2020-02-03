@@ -1,0 +1,88 @@
+[
+  {
+    "name": "guacd",
+    "image": "guacamole/guacd:latest",
+    "cpu": 1024,
+    "memory": 2048,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 4822
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-create-group": "true",
+        "awslogs-group": "awslogs-guacamole-guacd",
+        "awslogs-region": "ap-southeast-1",
+        "awslogs-stream-prefix": "awslogs-guacd"
+      }
+    }
+  },
+  {
+    "name": "guacamole",
+    "image": "samloh84/guacamole-auth-anyhow-aws:latest",
+    "cpu": 1024,
+    "memory": 2048,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 8080,
+        "hostPort": 8080
+      }
+    ],
+    "environment": [
+      {
+        "name": "GUACD_HOSTNAME",
+        "value": "guacd"
+      },
+      {
+        "name": "GUACD_PORT",
+        "value": "4822"
+      },
+      {
+        "name": "AWS_LAMBDA_FUNCTION",
+        "value": "guacamole-config"
+      },
+      {
+        "name": "OPENID_AUTHORIZATION_ENDPOINT",
+        "value": "${OPENID_AUTHORIZATION_ENDPOINT}"
+      },
+      {
+        "name": "OPENID_JWKS_ENDPOINT",
+        "value": "${OPENID_JWKS_ENDPOINT}"
+      },
+      {
+        "name": "OPENID_ISSUER",
+        "value": "${OPENID_ISSUER}"
+      },
+      {
+        "name": "OPENID_CLIENT_ID",
+        "value": "${OPENID_CLIENT_ID}"
+      },
+      {
+        "name": "OPENID_REDIRECT_URI",
+        "value": "${OPENID_REDIRECT_URI}"
+      },
+      {
+        "name": "AWS_REGION",
+        "value": "ap-southeast-1"
+      },
+      {
+        "name": "DEBUG_LOG",
+        "value": "1"
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-create-group": "true",
+        "awslogs-group": "awslogs-guacamole-guacamole",
+        "awslogs-region": "ap-southeast-1",
+        "awslogs-stream-prefix": "awslogs-guacamole"
+      }
+    }
+
+  }
+]

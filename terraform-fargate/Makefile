@@ -87,5 +87,17 @@ scp:
 	scp $${SSH_ARGS} $$(find ./guacamole-scripts -name "*.sh") centos@$${SSH_SERVER}:/home/centos/; \
 	ssh $${SSH_ARGS} centos@$${SSH_SERVER} 'chmod +x /home/centos/*.sh; sudo /home/centos/install-docker.sh; sudo /home/centos/install-aws-cli.sh; sudo /home/centos/run-guacamole.sh'
 
+
+scp_centos:
+	SSH_SERVER=$$(terraform output -json | jq -r '.guacamole_ip.value') && \
+	CENTOS_SERVER=$$(terraform output -json | jq -r '.centos_ip.value') && \
+	eval $$(ssh-agent) && ssh-add ~/.ssh/guacamole && \
+	SSH_ARGS="-o StrictHostKeyChecking=no" && \
+	SSH_ARGS+=" -o ForwardAgent=yes" && \
+	SSH_ARGS+=" -J centos@$${SSH_SERVER}" && \
+	ssh centos@$${CENTOS_SERVER} \
+	sed -i -e 's:#PasswordAuthentication:PasswordAuthentication:g' /etc/ssh/sshd_config
+
+
 invoke_lambda:
 	aws lambda invoke --function-name ${LAMBDA_FUNCTION} /dev/stdout

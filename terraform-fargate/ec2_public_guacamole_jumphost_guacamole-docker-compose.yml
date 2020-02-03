@@ -1,0 +1,26 @@
+version: '3'
+services:
+  guacd:
+    image: guacamole/guacd:latest
+    restart: unless-stopped
+    networks:
+      - guacamole
+  guacamole:
+    image: samloh84/guacamole-auth-anyhow-aws:latest
+    restart: unless-stopped
+    networks:
+      - guacamole
+    environment:
+      - GUACD_HOSTNAME=guacd
+      - GUACD_PORT=4822
+      - AWS_LAMBDA_FUNCTION=guacamole-config
+      - OPENID_AUTHORIZATION_ENDPOINT=${OPENID_AUTHORIZATION_ENDPOINT}
+      - OPENID_JWKS_ENDPOINT=${OPENID_JWKS_ENDPOINT}
+      - OPENID_ISSUER=${OPENID_ISSUER}
+      - OPENID_CLIENT_ID=${OPENID_CLIENT_ID}
+      - OPENID_REDIRECT_URI=${OPENID_REDIRECT_URI}
+      - AWS_REGION=ap-southeast-1
+      - DEBUG_LOG=1
+
+networks:
+  guacamole:
